@@ -1,0 +1,17 @@
+Este proyecto es un conjunto de scripts que se decarga datos de predicciones y resultados para las elecciones autonómicas en España del 2007.
+
+¿Porqué hacer este proyecto, si en podemos echar un vistazo al porcentaje de votos y escaños que se llevó cada partido y compararlo a mano con las predicciones? Porque los escaños y los porcentajes de votos ignoran las abstenciones y los votos en blanco (bueno, estos últimos no los ignoran exactamente, pero no los consideran como votos a nadie).
+
+La pregunta que surge entonces es ¿cómo ha cambiado desde la publicación de las predicciones del CIS hasta el día de las elecciones, la intención de voto de cada ciudadano? ¿Han aumentado aquellos ciudadanos que consideran que no merece la pena votar a ningún partido (abstenciones, votos en blanco)? ¿Ha aumentado el número de ciudadanos que se han decidido a apoyar a alguna fuerza política?
+
+Para ello vamos a centrarnos en la división de ciudadanos en grupos, de acuerdo a su intención de voto. Y para no crear una miriada de grupos, además dificlmente generalizables a todo el territorio español, vamos a baasarnos en el modelo bipartidista que caracteriza al actual panorama político español y que tanto se ha criticado últimamente desde ciertos círculos.
+
+Para ello, se definen los siguientes grupos:
+
+  - PP, PSOE: Tienen cada uno su propio grupo. Se corresponde a los ciudadanos que votan a PP, PSOE o UPN (grupo en que se presentó en su momento el PP de Navarra).
+  
+  - En blanco: Se refiere a aquellos ciudadanos que votan en blanco o se abstienen. Aunque el efecto en las elecciones puede no ser el mismo, la intención que reflejan es la misma: no han encontrado un partido político que les impulse a votarles.
+
+  - Otros partidos: Se refiere a aquellos ciudadanos que no votan a los dos partidos mayoritarios a nivel nacional. 
+
+ Debe notarse que en las predicciones hay un gran porcentaje de votantes indecisos. Estos votantes indecisos no entran en ningún grupo, por lo que no se tienen en cuenta a la hora de realizar los calculos de porcentajes en las predicciones.
