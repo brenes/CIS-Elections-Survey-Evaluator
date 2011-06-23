@@ -1,0 +1,72 @@
+default: 
+  predictions: &default_prediction
+    xpath:
+      voting_expression: "//body/font[1]/table[8]/tr//tr"
+
+predictions:  
+  aragon:
+    <<: *default_prediction
+    name: Aragón
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2687/e268700.html
+  asturias:
+    <<: *default_prediction
+    name: Asturias
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2688/e268800.html
+  baleares:
+    <<: *default_prediction
+    name: Baleares
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2689/e268900.html
+  canarias:
+    <<: *default_prediction
+    name: Canarias
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2690/e269000.html
+  cantabria:
+    <<: *default_prediction
+    name: Cantabria
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2691/e269100.html
+  castilla-la-mancha:
+    <<: *default_prediction
+    name: Castilla-La Mancha
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2692/e269200.html
+  castilla-leon:
+    <<: *default_prediction
+    name: Castilla León
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2693/e269300.html
+  comunidad-valenciana:
+    <<: *default_prediction
+    name: Comunidad Valenciana
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2694/e269400.html
+  extremadura:
+    <<: *default_prediction
+    name: Extremadura
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2695/e269500.html
+  la-rioja:
+    <<: *default_prediction
+    name: La Rioja
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2699/e269900.html
+  madrid:
+    <<: *default_prediction
+    name: Madrid
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2696/e269600.html
+# En Murcia se tiene que hacer a mano, no se puede aplicar un xpath
+#  murcia:
+#    <<: *default_prediction
+#    name: Murcia
+#    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2697/e269700.html
+#    xpath:
+#      voting_expression: "//body//table[8]/tr//tr"
+  navarra:
+    <<: *default_prediction
+    name: Navarra
+    url: http://www.cis.es/cis/opencms/-Archivos/Marginales/2680_2699/2698/e269800.html
+
+labels:
+  parties:
+    PP: PP
+    UPN: PP
+    PSOE: PSOE
+    CIU: CIU
+    PNV: PNV
+  blank: ["En blanco", "No votaría"]
+  no_label: ["No sabe todavía", "N.C.", "TOTAL"]
+  
