@@ -27,10 +27,10 @@ settings["predictions"].each do |survey_key, survey_zone|
   # for each result we must categorize it
   results.each do |result|
     
-    fonts = result.xpath(".//font")
+    fonts = result.xpath(".//td")
     result = {:type => fonts[0].content.strip, 
       :value => fonts[1].content.strip.to_f}
-        
+        puts result.inspect
     # If it's a party, we include it in its group
     if !settings["labels"]["parties"][result[:type]].nil?
 

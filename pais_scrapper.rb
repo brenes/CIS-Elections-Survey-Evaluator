@@ -7,20 +7,6 @@ require 'yaml'
 
 settings = YAML::load( File.open( 'settings.yml' ) )
 
-# each line of the voting table must fit in one of the following groups
-
-label_categories = {
-  #   - PP, PSOE, CIU and PNV have their own group
-  "PP" => "PP",
-  "UPN" => "PP",  # PP presented under UPN name in Navarra
-  "PSOE" => "PSOE",
-  "PSN-PSOE" => "PSOE",
-  "CIU" => "CIU",
-  "PNV" => "PNV"
-}
-
-#   - everyhing else goes to "other" category as corresponds to other parties
-
 # LET'S GO ####################################################################
 
 global_data = {}
@@ -28,7 +14,7 @@ global_data = {}
 # we first download each result
 settings["results"].each do |result_key, result_zone|
 
-  results = {}
+  categories = {}
 
   puts "Downloading #{result_zone["name"]} #{result_zone["url"]}"
   result_web = Nokogiri::HTML(open(result_zone["url"]))
@@ -50,21 +36,35 @@ settings["results"].each do |result_key, result_zone|
     party = {:name => party.xpath("nombre")[0].content, 
       :votes => party.xpath("votos_numero")[0].content.to_f}
         puts party.inspect
-    if label_categories[party[:name]].nil?
-        results["other"] ||= 0
-        results["other"] += party[:votes] 
-    else
-      results[label_categories[party[:name]]] ||= 0
-      results[label_categories[party[:name]]] += party[:votes]
+
+    # If it's a party, we include it in its group
+    if !settings["labels"]["parties"][party[:name]].nil?
+
+      categories[settings["labels"]["parties"][party[:name]]] ||= 0
+      categories[settings["labels"]["parties"][party[:name]]] += party[:votes]
+
+    # If it's a blank vote, to the blank group    
+    elsif settings["labels"]["blank"].include? party[:name]
+
+      categories["blank"] ||= 0
+      categories["blank"] += party[:votes]
+
+    # If it's not in the 'no label' group, to the 'others' group
+
+    elsif not(settings["labels"]["no_label"].include? party[:name])
+
+      categories["other"] ||= 0
+      categories["other"] += party[:votes]  
+
     end
 
   end
   
-  results["blank"] = no_votes_number + blank_votes_number
+  categories["blank"] = no_votes_number + blank_votes_number
 
   global_data[result_zone["name"]] = {}
 
-  results.each do |category, value|
+  categories.each do |category, value|
     global_data[result_zone["name"]][category] = 100 * value / total_people 
   end
 
