@@ -1,30 +1,11 @@
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
+require 'yaml'
 
-# SOME CONFIG STUFF ###########################################################
+# LOADING CONFIG STUFF ########################################################
 
-result_urls = {
-  "Aragón" => "http://resultados.elpais.com/elecciones/2007/autonomicas/02/index.xml2",
-  "Asturias" => "http://resultados.elpais.com/elecciones/2007/autonomicas/03/index.xml2",
-  "Baleares" => "http://resultados.elpais.com/elecciones/2007/autonomicas/04/index.xml2",
-  "Canarias" => "http://resultados.elpais.com/elecciones/2007/autonomicas/05/index.xml2",
-  "Cantabria" => "http://resultados.elpais.com/elecciones/2007/autonomicas/06/index.xml2",
-  "Catilla-La Mancha" => "http://resultados.elpais.com/elecciones/2007/autonomicas/07/index.xml2",
-  "Castilla-Leon" => "http://resultados.elpais.com/elecciones/2007/autonomicas/08/index.xml2",
-  "Comunidad Valenciana" => "http://resultados.elpais.com/elecciones/2007/autonomicas/17/index.xml2",
-  "Extremadura" => "http://resultados.elpais.com/elecciones/2007/autonomicas/10/index.xml2",
-  "La Rioja" => "http://resultados.elpais.com/elecciones/2007/autonomicas/16/index.xml2",
-  "Madrid" => "http://resultados.elpais.com/elecciones/2007/autonomicas/12/index.xml2",
-  "Murcia" => "http://resultados.elpais.com/elecciones/2007/autonomicas/15/index.xml2",
-  "Navarra" => "http://resultados.elpais.com/elecciones/2007/autonomicas/13/index.xml2"
-  }
-
-xpath_parties_expression = "//partido"
-xpath_votes_number_expression = "//votos/contabilizados/cantidad"
-xpath_invalid_votes_number_expression = "//votos/nulos/cantidad"
-xpath_no_votes_number_expression = "//votos/abstenciones/cantidad"
-xpath_blank_votes_number_expression = "//votos/blancos/cantidad"
+settings = YAML::load( File.open( 'settings.yml' ) )
 
 # each line of the voting table must fit in one of the following groups
 
@@ -45,21 +26,21 @@ label_categories = {
 global_data = {}
 
 # we first download each result
-result_urls.each do |result_zone, result_url|
+settings["results"].each do |result_key, result_zone|
 
   results = {}
 
-  puts "Downloading #{result_url}"
-  result_web = Nokogiri::HTML(open(result_url))
+  puts "Downloading #{result_zone["name"]} #{result_zone["url"]}"
+  result_web = Nokogiri::HTML(open(result_zone["url"]))
 
   # now we grab the global statistics
-  votes_number = result_web.xpath(xpath_votes_number_expression).first.content.to_f
-  invalid_votes_number = result_web.xpath(xpath_invalid_votes_number_expression).first.content.to_f
-  no_votes_number = result_web.xpath(xpath_no_votes_number_expression).first.content.to_f
-  blank_votes_number = result_web.xpath(xpath_blank_votes_number_expression).first.content.to_f
+  votes_number = result_web.xpath(result_zone["xpath"]["votes_number_expression"]).first.content.to_f
+  invalid_votes_number = result_web.xpath(result_zone["xpath"]["invalid_votes_number_expression"]).first.content.to_f
+  no_votes_number = result_web.xpath(result_zone["xpath"]["no_votes_number_expression"]).first.content.to_f
+  blank_votes_number = result_web.xpath(result_zone["xpath"]["blank_votes_number_expression"]).first.content.to_f
   total_people = votes_number + no_votes_number - invalid_votes_number
 
-  parties = result_web.xpath(xpath_parties_expression)
+  parties = result_web.xpath(result_zone["xpath"]["parties_expression"])
 
   puts "#{parties.count} opciones de voto posibles"
 
@@ -81,13 +62,12 @@ result_urls.each do |result_zone, result_url|
   
   results["blank"] = no_votes_number + blank_votes_number
 
-  global_data[result_zone] = {}
+  global_data[result_zone["name"]] = {}
 
   results.each do |category, value|
-    global_data[result_zone][category] = value / total_people
+    global_data[result_zone["name"]][category] = 100 * value / total_people 
   end
 
-  puts "#{result_zone }--> #{results.inspect}"
 end
 puts "************* RESULTADOS *****************"
 puts "zone|#{global_data.values.first.keys.join("|")}"
