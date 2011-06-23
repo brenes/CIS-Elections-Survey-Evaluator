@@ -1,0 +1,144 @@
+default: 
+  predictions: &default_prediction
+    xpath:
+      voting_expression: "//table[@class='t8']//tr"
+  results: &default_result
+    xpath:
+      parties_expression: "//partido"
+      votes_number_expression: "//votos/contabilizados/cantidad"
+      invalid_votes_number_expression: "//votos/nulos/cantidad"
+      no_votes_number_expression: "//votos/abstenciones/cantidad"
+      blank_votes_number_expression: "//votos/blancos/cantidad"
+
+predictions:  
+  aragon:
+    <<: *default_prediction
+    name: Aragón
+    url: http://davidjbrenes.info/cis/zaragoza/zaragoza.htm
+  asturias:
+    <<: *default_prediction
+    name: Asturias
+    url: http://davidjbrenes.info/cis/asturias/asturias.htm
+  baleares:
+    <<: *default_prediction
+    name: Baleares
+    url: http://davidjbrenes.info/cis/baleares/baleares.htm
+    xpath:
+      voting_expression: "//table[@class='t10']//tr"
+  canarias:
+    <<: *default_prediction
+    name: Canarias
+    url: http://davidjbrenes.info/cis/canarias/canarias.htm
+  cantabria:
+    <<: *default_prediction
+    name: Cantabria
+    url: http://davidjbrenes.info/cis/cantabria/cantabria.htm
+    xpath:
+      voting_expression: "//table[@class='t5']//tr"
+  castilla-la-mancha:
+    <<: *default_prediction
+    name: Castilla-La Mancha
+    url: http://davidjbrenes.info/cis/castilla-la-mancha/castilla-la-mancha.htm
+    xpath:
+      voting_expression: "//table[@class='t7']//tr"
+  castilla-leon:
+    <<: *default_prediction
+    name: Castilla León
+    url: http://davidjbrenes.info/cis/castilla-leon/castilla-leon.htm
+  comunidad-valenciana:
+    <<: *default_prediction
+    name: Comunidad Valenciana
+    url: http://davidjbrenes.info/cis/comunidad-valenciana/comunidad-valenciana.htm
+  extremadura:
+    <<: *default_prediction
+    name: Extremadura
+    url: http://davidjbrenes.info/cis/extremadura/extremadura.htm
+  la-rioja:
+    <<: *default_prediction
+    name: La Rioja
+    url: http://davidjbrenes.info/cis/la-rioja/la-rioja.htm
+    xpath:
+      voting_expression: "//table[@class='t5']//tr"
+  madrid:
+    <<: *default_prediction
+    name: Madrid
+    url: http://davidjbrenes.info/cis/madrid/madrid.htm
+    xpath:
+      voting_expression: "//table[@class='t6']//tr"
+  murcia:
+    <<: *default_prediction
+    name: Murcia
+    url: http://davidjbrenes.info/cis/murcia/murcia.htm
+    xpath:
+      voting_expression: "//table[@class='t10']//tr"
+  navarra:
+    <<: *default_result
+    name: Navarra
+    url: http://davidjbrenes.info/cis/navarra/navarra.htm
+    xpath:
+      voting_expression: "//table[@class='t5']//tr"
+
+results:  
+  aragon:
+    <<: *default_result
+    name: Aragón
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/02/index.xml2"
+  asturias:
+    <<: *default_result
+    name: Asturias
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/03/index.xml2"
+  baleares:
+    <<: *default_result
+    name: Baleares
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/04/index.xml2"
+  canarias:
+    <<: *default_result
+    name: Canarias
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/05/index.xml2"
+  cantabria:
+    <<: *default_result
+    name: Cantabria
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/06/index.xml2"
+  castilla-la-mancha:
+    <<: *default_result
+    name: Castilla-La Mancha
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/07/index.xml2"
+  castilla-leon:
+    <<: *default_result
+    name: Castilla León
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/08/index.xml2"
+  comunidad-valenciana:
+    <<: *default_result
+    name: Comunidad Valenciana
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/17/index.xml2"
+  extremadura:
+    <<: *default_result
+    name: Extremadura
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/10/index.xml2"
+  la-rioja:
+    <<: *default_result
+    name: La Rioja
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/16/index.xml2"
+  madrid:
+    <<: *default_result
+    name: Madrid
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/12/index.xml2"
+  murcia:
+    <<: *default_result
+    name: Murcia
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/15/index.xml2"
+  navarra:
+    <<: *default_result
+    name: Navarra
+    url: "http://resultados.elpais.com/elecciones/2011/autonomicas/13/index.xml2"
+
+labels:
+  parties:
+    PP: PP
+    PSOE: PSOE
+    PSN-PSOE: PSOE
+    CIU: CIU
+    PNV: PNV
+  blank: ["En blanco", "No votaría"]
+  no_label: ["No sabe todavía", "N.C.", "TOTAL"]
+  
